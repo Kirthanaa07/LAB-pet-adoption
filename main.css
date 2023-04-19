@@ -1,4 +1,25 @@
-body{
+body {
   background-color: aqua;
+}
+
+#app {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: space-around;
+}
+
+#actions{
+  display: flex;
+  justify-content: center;
+}
+
+#actions button {
+  margin: 10px;
+}
+
+.card {
+  margin: 10px 0px;
 }
 

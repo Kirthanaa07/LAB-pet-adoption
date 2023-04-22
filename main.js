@@ -293,3 +293,24 @@ document.querySelector("#dino").addEventListener("click", () => {
 
 cardsOnDom(pets);
 
+const form = document.querySelector('form');
+const createMember = (e) => {
+  e.preventDefault();
+
+  const newMemberObj = {
+    id: pets.length + 1,
+    name: document.querySelector('#name').value,
+    email: document.querySelector('#email').value,
+    specialSkill: document.querySelector('#specialSkill').value,
+    type: document.querySelector('#type').value,
+    imageUrl: document.querySelector('#imageUrl').value
+  }
+
+  pets.push(newMemberObj);
+  cardsOnDom(team);
+  form.reset();
+}
+
+form.addEventListener('Submit',createMember);
+
+

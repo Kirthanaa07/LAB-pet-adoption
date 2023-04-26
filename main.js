@@ -244,12 +244,12 @@ const pets = [
 const cardsOnDom = (array) => {
   let domString = "";
   for (const pet of array) {
-    domString += `<div class="card" style="width: 18rem;">
+    domString += `<div class="card card-${pet.type}" style="width: 18rem;">
   <img src="${pet.imageUrl}" class="card-img-top" alt="${pet.name}">
     <div class="card-body">
       <h5 class="card-text">${pet.name}</h5>
       <p class="card-text"> ${pet.specialSkill}<p>Type:${pet.type}</p>
-      <p>Type:${pet.type}</p>
+      <button class="btn btn-danger" id="delete--${pet.id}">Delete</button>
     </div>
   </div>`;
   }
@@ -294,23 +294,89 @@ document.querySelector("#dino").addEventListener("click", () => {
 cardsOnDom(pets);
 
 const form = document.querySelector('form');
-const createMember = (e) => {
+const createPet = (e) => {
   e.preventDefault();
 
-  const newMemberObj = {
+  const newPetObj = {
     id: pets.length + 1,
     name: document.querySelector('#name').value,
-    email: document.querySelector('#email').value,
-    specialSkill: document.querySelector('#specialSkill').value,
+    color: document.querySelector('#color').value,
+    specialSkill: document.querySelector('#SpecialSkill').value,
     type: document.querySelector('#type').value,
     imageUrl: document.querySelector('#imageUrl').value
   }
 
-  pets.push(newMemberObj);
-  cardsOnDom(team);
+  pets.push(newPetObj);
+  cardsOnDom(pets);
   form.reset();
 }
 
-form.addEventListener('Submit',createMember);
+form.addEventListener('submit', createPet);
 
 
+const app = document.querySelector("#app");
+app.addEventListener('click', (e) => {
+  console.log(e.target.id);
+  if (e.target.id.includes("delete")) {
+    const [, id] = e.target.id.split("--");
+    const index = pets.findIndex(e => e.id === Number(id));
+    pets.splice(index, 1);
+    cardsOnDom(pets);
+  }
+});
+
+const startApp = () => {
+  cardsOnDom(pets);
+  events();
+}
+startApp();
+
+
+const exampleModal = document.getElementById('exampleModal')
+if (exampleModal) {
+  exampleModal.addEventListener('show.bs.modal', event => {
+    // Button that triggered the modal
+    const button = event.relatedTarget
+    // Extract info from data-bs-* attributes
+    const recipient = button.getAttribute('data-bs-whatever')
+    // If necessary, you could initiate an Ajax request here
+    // and then do the updating in a callback.
+
+
+    // Update the modal's content.
+    const modalTitle = exampleModal.querySelector('.modal-title')
+    const modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+    modalTitle.textContent = `New message to ${recipient}`
+    modalBodyInput.value = recipient
+  })
+}
+
+
+
+
+// // Get the modal
+// const modal = document.getElementById("myModal");
+
+// // Get the button that opens the modal
+// const btn = document.getElementById("add-pets");
+
+// // Get the <span> element that closes the modal
+// //const span = document.getElementsByClassName("close")[0];
+
+// // When the user clicks on the button, open the modal
+// btn.onclick = function() {
+//   modal.style.display = "block";
+// }
+
+// // When the user clicks on <span> (x), close the modal
+// // span.onclick = function() {
+// //   modal.style.display = "none";
+// // }
+
+// // When the user clicks anywhere outside of the modal, close it
+// window.onclick = function(event) {
+//   if (event.target == modal) {
+//     modal.style.display = "none";
+//   }
+// }
